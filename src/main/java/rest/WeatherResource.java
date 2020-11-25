@@ -52,7 +52,7 @@ public class WeatherResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("{city}")
     public String getWeather(@PathParam("city") String city ) throws IOException {
-        String url = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=4cb8ceb8adc96ee3e4f0518d11cfa985";
+        String url = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=644ba4f8428deaaa71f44ab3f751b3a6";
         String weatherData = HttpUtils.fetchData(url);
         
         //ChuckDTO joke = GSON.fromJson(chuck, ChuckDTO.class);
@@ -63,7 +63,7 @@ public class WeatherResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("weatherDTO/{city}")
     public String getWeatherDTO(@PathParam("city") String city ) throws IOException {
-        String url = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=4cb8ceb8adc96ee3e4f0518d11cfa985";
+        String url = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=644ba4f8428deaaa71f44ab3f751b3a6";
         String weatherData = HttpUtils.fetchData(url);
         
         WeatherDTO weather = GSON.fromJson(weatherData, WeatherDTO.class);
@@ -72,7 +72,7 @@ public class WeatherResource {
     }
     
     public static void main(String[] args) throws IOException {
-        String url = "http://api.openweathermap.org/data/2.5/weather?q=" + "London" + "&appid=4cb8ceb8adc96ee3e4f0518d11cfa985";
+        String url = "http://api.openweathermap.org/data/2.5/weather?q=" + "London" + "&appid=644ba4f8428deaaa71f44ab3f751b3a6";
         String weatherData = HttpUtils.fetchData(url);
         
         WeatherDTO we = GSON.fromJson(weatherData, WeatherDTO.class);
