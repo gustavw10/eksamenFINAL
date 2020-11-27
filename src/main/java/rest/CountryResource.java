@@ -27,7 +27,7 @@ import utils.HttpUtils;
  * @author David
  */
 @Path("country")
-public class CountryResource {
+public class CountryResource implements CountryResourceInterface {
 
     private static Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private static FetchFacade FACADE = new FetchFacade();

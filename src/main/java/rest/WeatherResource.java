@@ -33,7 +33,7 @@ import utils.HttpUtils;
  * @author David
  */
 @Path("weather")
-public class WeatherResource {
+public class WeatherResource implements WeatherResourceInterface {
 
     private static Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private static FetchFacade FACADE = new FetchFacade();

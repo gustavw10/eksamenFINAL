@@ -28,7 +28,7 @@ import utils.HttpUtils;
  * @author David
  */
 @Path("covid")
-public class CovidResource {
+public class CovidResource implements CovidResourceInterface{
 
     private static Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private static FetchFacade FACADE = new FetchFacade();
@@ -39,8 +39,8 @@ public class CovidResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("{country}")
-    public String getWeather(@PathParam("country") String country ) throws IOException {
-        String url = "https://covid-api.mmediagroup.fr/v1/cases?country=" + country ;
+    public String getCovid(@PathParam("country") String country ) throws IOException {
+        String url = "https://covid-api.mmediagroup.fr/v1/cases?country=" + country;
         String covidData = HttpUtils.fetchData(url);
         
         
