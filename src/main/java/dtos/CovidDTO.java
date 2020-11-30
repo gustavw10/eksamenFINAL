@@ -22,15 +22,18 @@ public class CovidDTO {
         String recovered;
         String deaths;
         String country;
+        String abbreviation;
         int population;
+        
         public All() {
         }
 
-        public All(String confirmed, String recovered, String deaths, String country, int population) {
+        public All(String confirmed, String recovered, String deaths, String country, String abbreviation, int population) {
             this.confirmed = confirmed;
             this.recovered = recovered;
             this.deaths = deaths;
             this.country = country;
+            this.abbreviation = abbreviation;
             this.population = population;
         }
 

@@ -7,10 +7,15 @@ package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+import dtos.CovidListDTO;
 import dtos.CovidDTO;
 import dtos.WeatherDTO;
 import facades.FetchFacade;
 import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Consumes;
@@ -49,11 +54,25 @@ public class CovidResource implements CovidResourceInterface{
         return GSON.toJson(covid);
     }
     
-    public static void main(String[] args) throws IOException {
-        String url = "https://covid-api.mmediagroup.fr/v1/cases?country=" + "Denmark" ;
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("all")
+    public String getCovidAll() throws IOException {
+        String url = "https://api.covid19api.com/summary";
         String covidData = HttpUtils.fetchData(url);
-        CovidDTO covid = GSON.fromJson(covidData, CovidDTO.class);
-        System.out.println(covid.getAll().getCountry());
         
+        CovidListDTO covid = GSON.fromJson(covidData, CovidListDTO.class);
+        return GSON.toJson(covid);
+    }
+    
+    public static void main(String[] args) throws IOException {
+        String url = "https://api.covid19api.com/summary";
+        String covidData = HttpUtils.fetchData(url);
+        
+        CovidListDTO covid = GSON.fromJson(covidData, CovidListDTO.class);
+        
+        System.out.println(covid.getCountries().get(2));
+        
+        System.out.println(GSON.toJson(covid.getCountries().get(2)));
     }
 }
