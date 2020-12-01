@@ -11,6 +11,7 @@ import com.google.gson.reflect.TypeToken;
 import dtos.CovidListDTO;
 import dtos.CovidDTO;
 import dtos.WeatherDTO;
+import errorhandling.NotFoundException;
 import facades.FetchFacade;
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -44,7 +45,7 @@ public class CovidResource implements CovidResourceInterface{
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("{country}")
-    public String getCovid(@PathParam("country") String country ) throws IOException {
+    public String getCovid(@PathParam("country") String country ) throws IOException{
         String url = "https://covid-api.mmediagroup.fr/v1/cases?country=" + country;
         String covidData = HttpUtils.fetchData(url);
         

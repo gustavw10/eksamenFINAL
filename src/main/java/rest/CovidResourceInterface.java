@@ -5,6 +5,7 @@
  */
 package rest;
 
+import errorhandling.NotFoundException;
 import java.io.IOException;
 import javax.ws.rs.PathParam;
 
