@@ -1,41 +1,43 @@
 package facades;
 
+import dtos.UserDTO;
 import dtos.UsersDTO;
+import entities.Role;
 import entities.User;
+import errorhandling.MissingInputException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import securityerrorhandling.AuthenticationException;
 
 public class UserFacade {
-   
+
     private static EntityManagerFactory emf;
-    private static UserFacade instance; 
-    
+    private static UserFacade instance;
+
     private UserFacade() {
-        
+
     }
-    
-    
-        public static UserFacade getUserFacade(EntityManagerFactory _emf) {
+
+    public static UserFacade getUserFacade(EntityManagerFactory _emf) {
         if (instance == null) {
             emf = _emf;
             instance = new UserFacade();
         }
         return instance;
     }
-        
-        
-    public long getUserCount(){
+
+    public long getUserCount() {
         EntityManager em = emf.createEntityManager();
-        try{
-            long userCount = (long)em.createQuery("SELECT COUNT(u) FROM User u").getSingleResult();
+        try {
+            long userCount = (long) em.createQuery("SELECT COUNT(u) FROM User u").getSingleResult();
             return userCount;
-        }finally{  
+        } finally {
             em.close();
         }
-        
+
     }
-     public User getVeryfiedUser(String username, String password) throws AuthenticationException {
+
+    public User getVeryfiedUser(String username, String password) throws AuthenticationException {
         EntityManager em = emf.createEntityManager();
         User user;
         try {
@@ -48,10 +50,8 @@ public class UserFacade {
         }
         return user;
     }
-     
-     
-     
-         public UsersDTO getAllUsers() {
+
+    public UsersDTO getAllUsers() {
         EntityManager em = emf.createEntityManager();
         try {
             return new UsersDTO(em.createNamedQuery("Users.getAll").getResultList());
@@ -59,5 +59,26 @@ public class UserFacade {
             em.close();
         }
     }
-    
+
+    public UserDTO createUser(UserDTO u) throws MissingInputException {
+        if ((u.getUserName().length() == 0 || u.getUserPass().length() == 0)) {
+            throw new MissingInputException("Missing first and/or password");
+        }
+
+        EntityManager em = emf.createEntityManager();
+        User user = new User(u.getUserName(), u.getUserPass());
+
+        try {
+            em.getTransaction().begin();
+            Role userRole = new Role("user");
+            user.addRole(userRole);
+            em.persist(user);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+
+        return new UserDTO(user);
+    }
+
 }
